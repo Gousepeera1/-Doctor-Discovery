@@ -86,7 +86,7 @@ const LabMarketplace = () => {
 
             // 2. Create Order on Backend
             const amount = cart.reduce((acc, t) => acc + t.standardPrice, 0);
-            const orderRes = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/create-order`, { amount });
+            const orderRes = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/payment/create-order`, { amount });
             const order = orderRes.data;
 
             // 3. Open Razorpay Checkout
@@ -101,7 +101,7 @@ const LabMarketplace = () => {
                 handler: async function (response) {
                     try {
                         // 4. Verify Payment on Backend
-                        const verifyRes = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/verify-payment`, response);
+                        const verifyRes = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/payment/verify`, response);
 
                         if (verifyRes.data.success) {
                             // 5. Save Booking (Only after success)
